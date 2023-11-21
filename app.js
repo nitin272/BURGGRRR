@@ -1,11 +1,7 @@
 // Write your code on this file. Please don't change the existing code
 // unless absolutely needed.
 
-//Initial price of the burger
 var wholeWheatBun = 10;
-
-//Ingredients of the burger along with the price
-// Clue: the name is same as the textcontent of the button. Will be useful later on :)
 var ingredients = {
   Patty: 80,
   Cheese: 10,
@@ -22,8 +18,6 @@ var state = {
   Onions: true,
   Lettuce: true
 };
-
-// This function renders the entire screen everytime the state changes accordingly
 function renderAll() {
   renderPatty();
   renderCheese();
@@ -36,7 +30,7 @@ function renderAll() {
 }
 
 function renderPatty() {
-  let patty = document.querySelector("#patty")
+  let patty = document.querySelector("#patty");
   if (state.Patty) {
     patty.style.display = "inherit";
   } else {
@@ -44,50 +38,90 @@ function renderPatty() {
   }
 }
 
-function updatePrice() {
-  let totalPrice = wholeWheatBun;
-  for (let ingredient in state) {
-    if (state[ingredient]) {
-      totalPrice += ingredients[ingredient];
-    }
+function renderCheese() {
+  let cheese = document.querySelector("#cheese");
+  if(state.Cheese){
+    cheese.style.display = "inherit";
+  }else{
+    cheese.style.display = "none";
   }
-  return totalPrice;
 }
-function updateAndRenderPrice() {
-  const totalPrice = updatePrice();
-  const priceDetails = document.querySelector(".price-details");
-  priceDetails.textContent = "Total Price: $" + totalPrice;
+
+function renderTomatoes() {
+  let tomatoes = document.querySelector("#tomato");
+  if(state.Tomatoes){
+    tomatoes.style.display = "inherit"
+  }else{
+    tomatoes.style.display = "none"
+  }
 }
+
+function renderOnions() {
+  let onions = document.querySelector("#onion");
+  if(state.Onions){
+    onions.style.display = "inherit"
+  }else{
+    onions.style.display = "none"
+  }
+}
+
+function renderLettuce() {
+  let lettuce = document.querySelector("#lettuce");
+  if(state.Lettuce){
+    lettuce.style.display = "inherit"
+  }else{
+    lettuce.style.display = "none"
+  }
+}
+
 document.querySelector(".btn-patty").onclick = function () {
   state.Patty = !state.Patty;
-  updateAndRenderPrice();
   renderAll();
 };
-
-document.querySelector(".btn-cheese").onclick = function () {
+document.querySelector(".btn-cheese").onclick = function(){
   state.Cheese = !state.Cheese;
-  updateAndRenderPrice();
   renderAll();
-};
-
-document.querySelector(".btn-tomatoes").onclick = function () {
+}
+document.querySelector(".btn-tomatoes").onclick = function(){
   state.Tomatoes = !state.Tomatoes;
-  updateAndRenderPrice();
   renderAll();
-};
+}
 
-document.querySelector(".btn-onions").onclick = function () {
+document.querySelector(".btn-onions").onclick = function(){
   state.Onions = !state.Onions;
-  updateAndRenderPrice();
   renderAll();
-};
-
-document.querySelector(".btn-lettuce").onclick = function () {
+}
+document.querySelector(".btn-lettuce").onclick = function(){
   state.Lettuce = !state.Lettuce;
-  updateAndRenderPrice();
   renderAll();
-};
-updateAndRenderPrice();
-renderAll();
-
-
+}
+function renderButtons(){
+  for(key in state){
+    if(state[key]){
+      console.log(state[key]);
+      document.querySelector(".btn-" + key.toLowerCase()).classList.add("active")
+    }else{
+      document.querySelector(".btn-" + key.toLowerCase()).classList.remove("active")
+    }
+  }
+}
+function renderIngredientsBoard(){
+  let i = 0;
+  let elements = document.querySelectorAll(".items");
+  for(key in state){
+    if(state[key]){
+      elements[i++].style.display = "inherit";
+    }else{
+      elements[i++].style.display = "none";
+    }
+  }
+}
+function renderPrice(){
+  let totalPrice = 20;
+  for(key in state){
+    if(state[key]){
+      totalPrice+= ingredients[key];
+    }
+  }
+  document.querySelector("body > footer > div.Rectangle3 > div > p.price-details").innerHTML = "INR " + totalPrice;
+}
